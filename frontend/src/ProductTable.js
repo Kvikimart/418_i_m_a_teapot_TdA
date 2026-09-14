@@ -4,12 +4,6 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function renderProductTable(container, products, { onEdit, onDelete }) {
-  if (products.length === 0) {
-    container.innerHTML = "<p>No products.</p>";
-    return;
-  }
-
   const table = document.createElement("table");
   table.innerHTML = `
     <thead>
@@ -31,19 +25,7 @@ function renderProductTable(container, products, { onEdit, onDelete }) {
       <td>${p.cost}</td>
       <td class="actions"></td>`;
 
-    const actions = tr.querySelector(".actions");
-
-    const btnEdit = document.createElement("button");
-    btnEdit.textContent = "Edit";
-    btnEdit.addEventListener("click", () => onEdit(p));
-
-    const btnDelete = document.createElement("button");
-    btnDelete.textContent = "Delete";
-    btnDelete.addEventListener("click", () => onDelete(p.id));
-
-    actions.append(btnEdit, btnDelete);
-    tbody.appendChild(tr);
-  }
+    const actions = tr.querySelector(".actions")
 
   table.appendChild(tbody);
   container.replaceChildren(table);
