@@ -10,7 +10,13 @@
 
 :80 {
     handle /api/* {
-        reverse_proxy 127.0.0.1:8080
+        reverse_proxy 127.0.0.1:8080 {
+            lb_try_duration 15s
+            lb_try_interval 500ms
+        }
     }
-    reverse_proxy * 127.0.0.1:3001
+    reverse_proxy * 127.0.0.1:3001 {
+        lb_try_duration 15s
+        lb_try_interval 500ms
+    }
 }
