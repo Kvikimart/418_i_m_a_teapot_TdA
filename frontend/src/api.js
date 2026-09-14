@@ -1,35 +1,7 @@
 const API_URL = "http://localhost:8080/api";
 
-async function getProducts() {
-  const res = await fetch(`${API_URL}/product`);
-  return res.json();
-}
-
-async function createProduct(product) {
-  const res = await fetch(`${API_URL}/product`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(product),
-  });
-  return res.json();
-}
-
-async function updateProduct(id, product) {
-  const res = await fetch(`${API_URL}/product/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(product),
-  });
-  if (res.status === 404) {
-    const err = await res.json();
-    throw new Error(err.message);
-  }
-  return res.json();
-}
-
-async function deleteProduct(id) {
-  const res = await fetch(`${API_URL}/product/${id}`, {
-    method: "DELETE",
-  });
+async function health() {
+  const res = await fetch(`${API_URL}/v1/health`);
+  if (!res.ok) throw new Error(`Health check failed: ${res.status}`);
   return res.json();
 }
