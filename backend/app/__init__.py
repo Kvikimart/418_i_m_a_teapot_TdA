@@ -14,6 +14,7 @@ def create_app():
     CORS(app, resources={r"/api/*": {"origins": Config.CORS_ORIGINS}})
 
     app.register_blueprint(health_bp, url_prefix="/api/v1")
+    app.register_blueprint(team_bp, url_prefix="/api/v1")
 
     with app.app_context():
         db.create_all()
