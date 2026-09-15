@@ -4,6 +4,8 @@ from flask_cors import CORS
 from .config import Config
 from .extensions import db
 from .routes import health_bp
+from .models import Team
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -12,5 +14,14 @@ def create_app():
     CORS(app, resources={r"/api/*": {"origins": Config.CORS_ORIGINS}})
 
     app.register_blueprint(health_bp, url_prefix="/api/v1")
+
+    with app.app_context():
+        db.create_all()
+       
+        if not Team.query.first():
+           
+            my_team = Team(name="418 I am a teapod", members="Jméno 1, Jméno 2, Jméno 3")
+            db.session.add(my_team)
+            db.session.commit()
 
     return app
