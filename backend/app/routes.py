@@ -1,5 +1,8 @@
-from flask import Blueprint, jsonify, request, Flask
+from flask import Blueprint, jsonify
 from sqlalchemy import select
+
+from .extensions import db
+from .models import Team
 
 health_bp = Blueprint("health", __name__)
 team_bp = Blueprint("team", __name__)
@@ -9,9 +12,6 @@ team_bp = Blueprint("team", __name__)
 def health_check():
     return jsonify({"status": "ok"}), 200
 
-app = Flask(__name__)
-app.register_blueprint(health_bp, url_prefix="/api/v1")
-app.register_blueprint(team_bp, url_prefix="/api/v1")
 
 @team_bp.get("/team")
 def team_info():
