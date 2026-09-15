@@ -11,6 +11,7 @@ def health_check():
 
 app = Flask(__name__)
 app.register_blueprint(health_bp, url_prefix="/api/v1")
+app.register_blueprint(team_bp, url_prefix="/api/v1")
 
 @team_bp.get("/team")
 def team_info():
