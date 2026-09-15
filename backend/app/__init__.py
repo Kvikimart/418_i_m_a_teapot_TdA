@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from .config import Config
 from .extensions import db
-from .routes import health_bp
+from .routes import health_bp, team_bp
 from .models import Team
 
 def create_app():
