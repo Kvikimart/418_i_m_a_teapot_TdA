@@ -20,7 +20,7 @@ def create_app():
        
         if not Team.query.first():
            
-            my_team = Team(name="418 I am a teapod", members="Jméno 1, Jméno 2, Jméno 3")
+            my_team = Team(name="418 I'm a teapot", members="Viktor Vedral, Klára Tipplová, Matyáš Baloun")
             db.session.add(my_team)
             db.session.commit()
 
