@@ -28,7 +28,7 @@ services:
     network_mode: host
     environment:
       MYSQL_DATABASE: product
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: "{{MYSQL_ROOT_PASSWORD}}"
     volumes:
       - ./backend/docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
