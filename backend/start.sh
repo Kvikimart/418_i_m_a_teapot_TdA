@@ -2,6 +2,7 @@
 set -e
 
 export PORT="${PORT:-8080}"
+export FLASK_APP=run.py
 
 python -c "
 import os, socket, time
@@ -16,5 +17,8 @@ for _ in range(30):
 else:
     raise SystemExit(f'Database not reachable at {host}:{port}')
 "
+
+flask db upgrade
+flask seed
 
 exec python run.py
