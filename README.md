@@ -17,3 +17,4 @@ Ostatní: Zaměřili jsme se i na detaily jako např. přidání MIT licence neb
 
 
 <img width="474" height="316" alt="image" src="https://github.com/user-attachments/assets/34b1deae-31f2-4e05-b0fa-3e1e0746c2e8" />
+KABOOM - vybouchlo
