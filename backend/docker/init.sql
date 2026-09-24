@@ -1,0 +1,5 @@
+-- init.sql
+CREATE DATABASE IF NOT EXISTS test_database;
+CREATE USER IF NOT EXISTS 'tda_user'@'%' IDENTIFIED BY "{{MYSQL_PASSWORD}}";
+GRANT ALL PRIVILEGES ON test_database.* TO 'tda_user'@'%';
+FLUSH PRIVILEGES;
