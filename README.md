@@ -14,6 +14,7 @@ API: Vytvořili jsme dva API endpointy, team a health. API endpointy jsme otesto
 Ostatní: Zaměřili jsme se i na detaily jako např. přidání MIT licence nebo zápis hesel a citlivých údajů v repozitáři přes Github secrets/proměnné místo hardcoded stringů.
 
 =================================================================================================================================================================================================================================================
+"
                           . .                         
                  ::-==============-::.               
               .-**+-.             .:=+=-.            
@@ -43,6 +44,7 @@ Ostatní: Zaměřili jsme se i na detaily jako např. přidání MIT licence neb
          ..::-=**%%%#****+*+++++++**###*=:.          
             ..::-=+**###%%%%%#%##**+=-:..            
                     ............    
+                    "
 =================================================================================================================================================================================================================================================
                     
 <img width="474" height="316" alt="image" src="https://github.com/user-attachments/assets/34b1deae-31f2-4e05-b0fa-3e1e0746c2e8" />
