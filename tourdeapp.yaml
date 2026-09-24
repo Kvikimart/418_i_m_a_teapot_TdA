@@ -11,7 +11,7 @@ containers:
     port: 8080
     env:
       FLASK_DB_HOST: 127.0.0.1
-      FLASK_DB_NAME: product
+      FLASK_DB_NAME: test_database
       FLASK_DB_PASSWORD: "{{MYSQL_PASSWORD}}"
       FLASK_DB_PORT: "3306"
       FLASK_DB_USER: tda_user
@@ -20,7 +20,7 @@ containers:
     image: mysql
     tag: "8.4"
     env:
-      MYSQL_DATABASE: product
+      MYSQL_DATABASE: test_database
       MYSQL_ROOT_PASSWORD: "{{MYSQL_ROOT_PASSWORD}}"
       MYSQL_USER: tda_user
       MYSQL_PASSWORD: "{{MYSQL_PASSWORD}}"
