@@ -1,5 +1,6 @@
 from typing import Any
-from sqlalchemy import String
+from decimal import Decimal
+from sqlalchemy import Boolean, DECIMAL, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .extensions import db
