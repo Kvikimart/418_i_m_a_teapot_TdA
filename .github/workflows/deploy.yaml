@@ -17,5 +17,6 @@ jobs:
         env:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          FLASK_PASSWORD: ${{ secrets.FLASK_PASSWORD }}
         with:
           tdc_token: ${{ secrets.TDC_TOKEN }}
