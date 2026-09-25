@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from sqlalchemy import select
 
 from .extensions import db
-from .models import Team
+from .models import Team, Stops
 
 health_bp = Blueprint("health", __name__)
 team_bp = Blueprint("team", __name__)
