@@ -10,7 +10,7 @@ stops_bp = Blueprint("stops", __name__)
 
 @stops_bp.get("/stops")
 def get_stops():
-    if stops is None
+    if stops is None:
         return jsonify({"error": "No stops found"}), 404
     return jsonify({"imageURL": stops.imageURL, "id": stops.id, "name": stops.name, "x": stops.x, "y": stops.y, 'tranfer': "yes" if stop.transfer else "no", 'wheelAccessible': "yes" if stop.wheelAccessible else "no", 'shelter': "yes" if stop.shelter else "no", 'bench': "yes" if stop.bench else "no", 'display': "yes" if stop.display else "no",  'ticketMachine': "yes" if stop.tikcetMachine else "no"}), 200
                     
