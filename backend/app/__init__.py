@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from .config import Config
 from .extensions import db, migrate
-from .routes import health_bp, team_bp, stops_db
+from .routes import health_bp, team_bp, stops_bp
 from .models import Team, Stops
 
 
