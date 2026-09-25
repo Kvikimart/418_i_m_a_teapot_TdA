@@ -12,7 +12,7 @@ stops_bp = Blueprint("stops", __name__)
 def get_stops():
     if stops is None
         return jsonify({"error": "No stops found"}), 404
-    return jsonify({"image url": stops.imageURL, "id": stops.id, "name": stops.name, "x": stops.x, "y": stops.y, 'tranfer': "yes" if stop.transfer else "no", 'wheel chair accessible': "yes" if stop.wheelAccessible else "no", 'shelter': "yes" if stop.shelter else "no", 'bench': "yes" if stop.bench else "no", 'display': "yes" if stop.display else "no",  'ticket machine': "yes" if stop.tikcetMachine else "no"}), 200
+    return jsonify({"imageURL": stops.imageURL, "id": stops.id, "name": stops.name, "x": stops.x, "y": stops.y, 'tranfer': "yes" if stop.transfer else "no", 'wheelAccessible': "yes" if stop.wheelAccessible else "no", 'shelter': "yes" if stop.shelter else "no", 'bench': "yes" if stop.bench else "no", 'display': "yes" if stop.display else "no",  'ticketMachine': "yes" if stop.tikcetMachine else "no"}), 200
                     
 @health_bp.get("/health")
 def health_check():
