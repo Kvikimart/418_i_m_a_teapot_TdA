@@ -6,7 +6,7 @@ from .extensions import db
 class Stops(db.Model):
     __tablename__: str = "stops"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(128),nullable=False)
     imageURL: Mapped[str] = mapped_column(String(128),nullable=False)
     x: Mapped[float] = mapped_column(DECIMAL(10,6),nullable=False)
