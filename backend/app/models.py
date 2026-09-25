@@ -6,17 +6,17 @@ from .extensions import db
 class Stops(db.Model):
     __tablename__: str = "stops"
 
-    id = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name = mapped_column(String(128),nullable=False)
-    imageURL = mapped_column(String(128),nullable=False)
-    x = mapped_column(DECIMAL(10,6),nullable=False)
-    y = mapped_column(DECIMAL(10,6),nullable=False)
-    transfer = mapped_column(Boolean,nullable=False, default=False)
-    wheelAccessible = mapped_column(Boolean,nullable=False, default=False)
-    ticketMachine = mapped_column(Boolean,nullable=False, default=False)
-    shelter = mapped_column(Boolean,nullable=False, default=False)
-    bench = mapped_column(Boolean,nullable=False, default=False)
-    display = mapped_column(Boolean,nullable=False, default=False)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(128),nullable=False)
+    imageURL: Mapped[str] = mapped_column(String(128),nullable=False)
+    x: Mapped[float] = mapped_column(DECIMAL(10,6),nullable=False)
+    y: Mapped[float] = mapped_column(DECIMAL(10,6),nullable=False)
+    transfer: Mapped[bool] = mapped_column(Boolean,nullable=False, default=False)
+    wheelAccessible: Mapped[bool] = mapped_column(Boolean,nullable=False, default=False)
+    ticketMachine: Mapped[bool]  = mapped_column(Boolean,nullable=False, default=False)
+    shelter: Mapped[bool] = mapped_column(Boolean,nullable=False, default=False)
+    bench: Mapped[bool] = mapped_column(Boolean,nullable=False, default=False)
+    display: Mapped[bool] = mapped_column(Boolean,nullable=False, default=False)
     
 class Team(db.Model):
     __tablename__: str = "team"
