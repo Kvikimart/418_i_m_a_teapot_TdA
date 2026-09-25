@@ -3,8 +3,8 @@ from flask_cors import CORS
 
 from .config import Config
 from .extensions import db, migrate
-from .routes import health_bp, team_bp
-from .models import Team
+from .routes import health_bp, team_bp, stops_db
+from .models import Team, Stops
 
 
 def create_app():
@@ -17,6 +17,8 @@ def create_app():
 
     app.register_blueprint(health_bp, url_prefix="/api/v1")
     app.register_blueprint(team_bp, url_prefix="/api/v1")
+    app.register_blueprint(stops_bp, url_prefix="/api/v1")
+
 
     @app.cli.command("seed")
     def seed():
