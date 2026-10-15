@@ -10,10 +10,23 @@ def parse_bool(value: str) -> bool:
     return str(value).strip().lower() == "true"
 
 
-CSV_PATH = Path(__file__).resolve().parents[2] / "Media" / "Stops" / "stops.csv"
+CSV_CANDIDATES = (
+    Path(__file__).resolve().parents[1] / "Media" / "Stops" / "stops.csv",
+    Path(__file__).resolve().parents[2] / "Media" / "Stops" / "stops.csv",
+    Path("/app/Media/Stops/stops.csv"),
+)
 
 
-def import_stops_data(csv_path: Path = CSV_PATH) -> int:
+def resolve_csv_path() -> Path:
+    for path in CSV_CANDIDATES:
+        if path.exists():
+            return path
+    candidate_list = ", ".join(str(path) for path in CSV_CANDIDATES)
+    raise FileNotFoundError(f"stops.csv not found. Tried: {candidate_list}")
+
+
+def import_stops_data(csv_path: Path | None = None) -> int:
+    csv_path = csv_path or resolve_csv_path()
     imported = 0
     with csv_path.open(newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -46,4 +59,4 @@ if __name__ == "__main__":
     app = create_app()
     with app.app_context():
         imported = import_stops_data()
-        print(f"Imported {imported} stops from {CSV_PATH}")
+        print(f"Imported {imported} stops")
