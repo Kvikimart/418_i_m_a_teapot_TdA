@@ -1,4 +1,5 @@
 from flask import Flask
+from flask.cli import with_appcontext
 from flask_cors import CORS
 
 from .config import Config
@@ -32,5 +33,13 @@ def create_app():
             print("Seed proběhl.")
         else:
             print("Data už existují, seed přeskočen.")
+
+    @app.cli.command("import_stops")
+    @with_appcontext
+    def import_stops_command():
+        from .import_stops import import_stops_data
+
+        imported = import_stops_data()
+        print(f"Imported {imported} stops.")
 
     return app

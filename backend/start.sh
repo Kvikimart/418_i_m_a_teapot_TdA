@@ -19,6 +19,7 @@ else:
 "
 
 flask db upgrade
+flask import_stops
 flask seed
 
 exec python run.py

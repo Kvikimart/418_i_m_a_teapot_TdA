@@ -2,11 +2,8 @@
 
 import csv
 from pathlib import Path
-from app import create_app
 from app.extensions import db
 from app.models import Stops
-
-app = create_app()
 
 
 def parse_bool(value: str) -> bool:
@@ -16,8 +13,9 @@ def parse_bool(value: str) -> bool:
 CSV_PATH = Path(__file__).resolve().parents[2] / "Media" / "Stops" / "stops.csv"
 
 
-with app.app_context():
-    with CSV_PATH.open(newline="", encoding="utf-8") as f:
+def import_stops_data(csv_path: Path = CSV_PATH) -> int:
+    imported = 0
+    with csv_path.open(newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             stop = Stops(
@@ -36,5 +34,16 @@ with app.app_context():
                 image_url=row["image_url"],
             )
             db.session.merge(stop)
+            imported += 1
 
     db.session.commit()
+    return imported
+
+
+if __name__ == "__main__":
+    from app import create_app
+
+    app = create_app()
+    with app.app_context():
+        imported = import_stops_data()
+        print(f"Imported {imported} stops from {CSV_PATH}")
