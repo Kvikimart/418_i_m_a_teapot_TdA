@@ -97,3 +97,32 @@ p {
   color: #555;
   font-size: 14px;
 }
+
+/* The stops table has many columns, so give that page more room. */
+body:has(#stops-table) {
+  max-width: 1200px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  color-scheme: dark;
+  margin-bottom: 24px;
+}
+
+.table-wrap table {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+#stops-table th,
+#stops-table td {
+  padding: 8px 12px;
+}
+
+.stop-thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}

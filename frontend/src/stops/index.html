@@ -9,17 +9,28 @@
   <body>
     <h1>Think different Academy</h1>
     <p id="health">Status: …</p>
-    <div class="bus-stop-card">
-      <img id="image_url" src="" alt="Bus Stop Image" width="200">
-        <p><strong>ID:</strong> <span id="id"></span></p>
-        <p><strong>Name:</strong> <span id="name"></span></p>
-        <p><strong>X Coordinate:</strong> <span id="x"></span></p>
-        <p><strong>Y Coordinate:</strong> <span id="y"></span></p>
-      <p><strong>Wheelchair Accessible:</strong> <span id="wheelchair_accessible"></span></p>
-      <p><strong>Shelter:</strong> <span id="has_shelter"></span></p>
-      <p><strong>Bench:</strong> <span id="has_bench"></span></p>
-      <p><strong>Ticket Machine:</strong> <span id="has_ticket_machine"></span></p>
-      <p><strong>Transfer:</strong> <span id="is_transfer"></span></p>
+    <div class="table-wrap">
+      <table id="stops-table">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Lines</th>
+            <th>Transfer</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Wheelchair</th>
+            <th>Shelter</th>
+            <th>Bench</th>
+            <th>Ticket machine</th>
+            <th>Display</th>
+          </tr>
+        </thead>
+        <tbody id="stops-body">
+          <tr><td colspan="12">Loading stops…</td></tr>
+        </tbody>
+      </table>
     </div>
     <h2>Made by</h2>
     <h2 id="team-name">…</h2>

@@ -1,4 +1,4 @@
-import { getHealth, getTeam } from "./api.js";
+import { getHealth, getTeam, getStops } from "./api.js";
 
 export async function renderHealth(el) {
   try {
@@ -26,36 +26,72 @@ async function loadTeam() {
 
 loadTeam();
 
+const STOP_COLUMNS = 12;
+
+function yesNo(value) {
+  return value ? "✓" : "–";
+}
+
+function formatLines(value) {
+  return value ? value.split(";").join(", ") : "–";
+}
+
+function cell(content) {
+  const td = document.createElement("td");
+  if (content instanceof Node) td.append(content);
+  else td.textContent = content;
+  return td;
+}
+
+function stopRow(stop) {
+  const tr = document.createElement("tr");
+
+  let photo = "–";
+  if (stop.image_url) {
+    photo = document.createElement("img");
+    photo.src = stop.image_url;
+    photo.alt = stop.name;
+    photo.className = "stop-thumb";
+    photo.loading = "lazy";
+  }
+
+  tr.append(
+    cell(photo),
+    cell(String(stop.id).padStart(3, "0")),
+    cell(stop.name),
+    cell(formatLines(stop.lines)),
+    cell(stop.is_transfer ? formatLines(stop.transfer_lines) : "–"),
+    cell(String(stop.x)),
+    cell(String(stop.y)),
+    cell(yesNo(stop.wheelchair_accessible)),
+    cell(yesNo(stop.has_shelter)),
+    cell(yesNo(stop.has_bench)),
+    cell(yesNo(stop.has_ticket_machine)),
+    cell(yesNo(stop.has_display)),
+  );
+  return tr;
+}
+
+function messageRow(text) {
+  const tr = document.createElement("tr");
+  const td = cell(text);
+  td.colSpan = STOP_COLUMNS;
+  tr.append(td);
+  return tr;
+}
+
 async function loadStops() {
-  const imageUrlEl = document.getElementById("image_url");
-  const idEl = document.getElementById("id");
-  const nameEl = document.getElementById("name");
-  const xEl = document.getElementById("x");
-  const yEl = document.getElementById("y");
-  const wheelchairAccessibleEl = document.getElementById("wheelchair_accessible");
-  const hasShelterEl = document.getElementById("has_shelter");
-  const hasBenchEl = document.getElementById("has_bench");
-  const hasTicketMachineEl = document.getElementById("has_ticket_machine");
-  const isTransferEl = document.getElementById("is_transfer");
+  const body = document.getElementById("stops-body");
+  if (!body) return;
+
   try {
-    const response = await fetch('/api/v1/stops');
-    const data = await response.json();
-    const stop = Array.isArray(data) ? data[0] : data;
-    if (!stop) return;
-
-    if (imageUrlEl && stop.image_url) imageUrlEl.src = stop.image_url;
-    if (idEl) idEl.textContent = String(stop.id).padStart(3, '0');
-    if (nameEl) nameEl.textContent = stop.name;
-    if (xEl) xEl.textContent = stop.x;
-    if (yEl) yEl.textContent = stop.y;
-    if (wheelchairAccessibleEl) wheelchairAccessibleEl.textContent = String(stop.wheelchair_accessible);
-    if (hasShelterEl) hasShelterEl.textContent = String(stop.has_shelter);
-    if (hasBenchEl) hasBenchEl.textContent = String(stop.has_bench);
-    if (hasTicketMachineEl) hasTicketMachineEl.textContent = String(stop.has_ticket_machine);
-    if (isTransferEl) isTransferEl.textContent = String(stop.is_transfer);
-
+    const stops = await getStops();
+    body.replaceChildren(
+      ...(stops.length ? stops.map(stopRow) : [messageRow("No stops found.")]),
+    );
   } catch (error) {
     console.error("Error loading bus stop data:", error);
+    body.replaceChildren(messageRow("Could not load stops."));
   }
 }
 
