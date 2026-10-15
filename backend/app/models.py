@@ -31,3 +31,7 @@ class Team(db.Model):
     def to_dict(self) -> dict[str, Any]:
         return {"id": self.id, "name": self.name, "members": self.members}
 
+
+
+def create_missing_tables() -> None:
+    db.create_all()

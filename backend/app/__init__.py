@@ -38,7 +38,9 @@ def create_app():
     @with_appcontext
     def import_stops_command():
         from .import_stops import import_stops_data
+        from .models import create_missing_tables
 
+        create_missing_tables()
         imported = import_stops_data()
         print(f"Imported {imported} stops.")
 
