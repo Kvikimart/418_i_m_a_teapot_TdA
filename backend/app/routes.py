@@ -7,12 +7,34 @@ from .models import Team, Stops
 health_bp = Blueprint("health", __name__)
 team_bp = Blueprint("team", __name__)
 stops_bp = Blueprint("stops", __name__)
+create_bp = Blueprint("create_stop", __name__)
 
 @stops_bp.get("/stops")
 def get_stops():
-    if stops is None:
+    stops = db.session.execute(select(Stops)).scalars().all()
+    if not stops:
         return jsonify({"error": "No stops found"}), 404
-    return jsonify({"imageURL": stops.imageURL, "id": stops.id, "name": stops.name, "x": stops.x, "y": stops.y, 'tranfer': "yes" if stop.transfer else "no", 'wheelAccessible': "yes" if stop.wheelAccessible else "no", 'shelter': "yes" if stop.shelter else "no", 'bench': "yes" if stop.bench else "no", 'display': "yes" if stop.display else "no",  'ticketMachine': "yes" if stop.tikcetMachine else "no"}), 200
+
+    return jsonify(
+        [
+            {
+                "id": stop.id,
+                "name": stop.name,
+                "lines": stop.lines,
+                "is_transfer": stop.is_transfer,
+                "transfer_lines": stop.transfer_lines,
+                "x": stop.x,
+                "y": stop.y,
+                "wheelchair_accessible": stop.wheelchair_accessible,
+                "has_shelter": stop.has_shelter,
+                "has_bench": stop.has_bench,
+                "has_ticket_machine": stop.has_ticket_machine,
+                "has_display": stop.has_display,
+                "image_url": stop.image_url,
+            }
+            for stop in stops
+        ]
+    ), 200
                     
 @health_bp.get("/health")
 def health_check():
@@ -25,3 +47,4 @@ def team_info():
     if team is None:
         return jsonify({"error": "no team"}), 404
     return jsonify({"name": team.name, "members": team.members}), 200
+

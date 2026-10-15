@@ -26,30 +26,33 @@ async function loadTeam() {
 
 loadTeam();
 
-async function loadStosp() {
-  const imageEl = document.getElementById("imageURL");
+async function loadStops() {
+  const imageUrlEl = document.getElementById("image_url");
   const idEl = document.getElementById("id");
   const nameEl = document.getElementById("name");
   const xEl = document.getElementById("x");
   const yEl = document.getElementById("y");
-  const wheelEl = document.getElementById("wheelAccessible");
-  const shelterEl = document.getElementById("shelter");
-  const benchEl = document.getElementById("bench");
-  const machineEl = document.getElementById("ticketMachine");
-  const transferEl = document.getElementById("transfer");
+  const wheelchairAccessibleEl = document.getElementById("wheelchair_accessible");
+  const hasShelterEl = document.getElementById("has_shelter");
+  const hasBenchEl = document.getElementById("has_bench");
+  const hasTicketMachineEl = document.getElementById("has_ticket_machine");
+  const isTransferEl = document.getElementById("is_transfer");
   try {
     const response = await fetch('/api/v1/stops');
     const data = await response.json();
-    if (imageEl && data.imageURL) imageEl.src = data.imageURL;
-    if (idEl) idEl.textContent = String(data.id).padStart(3, '0');
-    if (nameEl) nameEl.textContent = data.name;
-    if (xEl) xEl.textContent = data.x;
-    if (yEl) yEl.textContent = data.y;
-    if (wheelEl) wheelEl.textContent = data.wheelAccessible;
-    if (shelterEl) shelterEl.textContent = data.shelter;
-    if (benchEl) benchEl.textContent = data.bench;
-    if (machineEl) machineEl.textContent = data.ticketMachine;
-    if (transferEl) transferEl.textContent = data.transfer;
+    const stop = Array.isArray(data) ? data[0] : data;
+    if (!stop) return;
+
+    if (imageUrlEl && stop.image_url) imageUrlEl.src = stop.image_url;
+    if (idEl) idEl.textContent = String(stop.id).padStart(3, '0');
+    if (nameEl) nameEl.textContent = stop.name;
+    if (xEl) xEl.textContent = stop.x;
+    if (yEl) yEl.textContent = stop.y;
+    if (wheelchairAccessibleEl) wheelchairAccessibleEl.textContent = String(stop.wheelchair_accessible);
+    if (hasShelterEl) hasShelterEl.textContent = String(stop.has_shelter);
+    if (hasBenchEl) hasBenchEl.textContent = String(stop.has_bench);
+    if (hasTicketMachineEl) hasTicketMachineEl.textContent = String(stop.has_ticket_machine);
+    if (isTransferEl) isTransferEl.textContent = String(stop.is_transfer);
 
   } catch (error) {
     console.error("Error loading bus stop data:", error);
