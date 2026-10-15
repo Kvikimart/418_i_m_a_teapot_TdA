@@ -10,10 +10,11 @@ def parse_bool(value: str) -> bool:
     return str(value).strip().lower() == "true"
 
 
+# The server image is built with ./backend as the Docker context, so the CSV
+# must live inside backend/ to be copied into the container (/app/data).
 CSV_CANDIDATES = (
-    Path(__file__).resolve().parents[1] / "Media" / "Stops" / "stops.csv",
-    Path(__file__).resolve().parents[2] / "Media" / "Stops" / "stops.csv",
-    Path("/app/Media/Stops/stops.csv"),
+    Path(__file__).resolve().parents[1] / "data" / "stops.csv",
+    Path("/app/data/stops.csv"),
 )
 
 
