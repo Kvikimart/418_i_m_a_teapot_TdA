@@ -2,6 +2,8 @@
 
 import csv
 from pathlib import Path
+from sqlalchemy import func, select
+
 from app.extensions import db
 from app.models import Stops
 
@@ -27,6 +29,9 @@ def resolve_csv_path() -> Path:
 
 
 def import_stops_data(csv_path: Path | None = None) -> int:
+    if db.session.execute(select(func.count()).select_from(Stops)).scalar():
+        return 0
+
     csv_path = csv_path or resolve_csv_path()
     imported = 0
     with csv_path.open(newline="", encoding="utf-8") as f:
@@ -45,9 +50,9 @@ def import_stops_data(csv_path: Path | None = None) -> int:
                 has_bench=parse_bool(row["has_bench"]),
                 has_ticket_machine=parse_bool(row["has_ticket_machine"]),
                 has_display=parse_bool(row["has_display"]),
-                image_url=row["image_url"],
+                image_url=row["image_url"] or None,
             )
-            db.session.merge(stop)
+            db.session.add(stop)
             imported += 1
 
     db.session.commit()
