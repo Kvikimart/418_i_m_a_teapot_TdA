@@ -2,7 +2,6 @@
 
 import csv
 from pathlib import Path
-from sqlalchemy import func, select
 
 from app.extensions import db
 from app.models import Stops
@@ -29,30 +28,22 @@ def resolve_csv_path() -> Path:
 
 
 def import_stops_data(csv_path: Path | None = None) -> int:
-    if db.session.execute(select(func.count()).select_from(Stops)).scalar():
-        return 0
-
     csv_path = csv_path or resolve_csv_path()
     imported = 0
     with csv_path.open(newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            stop = Stops(
-                id=int(row["id"]),
-                name=row["name"],
-                lines=row["lines"],
-                is_transfer=parse_bool(row["is_transfer"]),
-                transfer_lines=row["transfer_lines"],
-                x=row["x"],
-                y=row["y"],
-                wheelchair_accessible=parse_bool(row["wheelchair_accessible"]),
-                has_shelter=parse_bool(row["has_shelter"]),
-                has_bench=parse_bool(row["has_bench"]),
-                has_ticket_machine=parse_bool(row["has_ticket_machine"]),
-                has_display=parse_bool(row["has_display"]),
-                image_url=row["image_url"] or None,
-            )
-            db.session.add(stop)
+            stop_id = int(row["id"])
+            stop = db.session.get(Stops, stop_id)
+            if stop is None:
+                stop = Stops(id=stop_id)
+                db.session.add(stop)
+
+            stop.name = row["name"]
+            stop.wheelchair_accessible = parse_bool(row["wheelchair_accessible"])
+            stop.has_shelter = parse_bool(row["has_shelter"])
+            stop.has_ticket_machine = parse_bool(row["has_ticket_machine"])
+            stop.image_url = row["image_url"] or None
             imported += 1
 
     db.session.commit()
